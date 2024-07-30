@@ -11,8 +11,7 @@ class Stock extends CI_Controller
 	public function index()
 	{
 		$content = $this->load->view('admin/stock', [], TRUE);
-		$this->template->load2('', $content);
-
+		$this->template->load('', $content);
 	}
 
 	public function datatables()
