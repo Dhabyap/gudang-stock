@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
+                <table class="table table-bordered nowrap" id="example" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -24,18 +24,6 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Keterangan</th>
-                            <th>Jumlah</th>
-                            <th>Waktu</th>
-                            <th>Transaksi</th>
-                            <th>Unit</th>
-                            <th>Tanggal</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                     </tbody>
                 </table>
@@ -120,9 +108,8 @@
                 [20, 50, 100, 200, -1],
                 [20, 50, 100, 200, "All"]
             ],
-
             "serverSide": true,
-            "order": [[5, 'desc']],
+            "order": [[2, 'desc']],
             "ajax": {
                 "url": "<?= base_url('CashFlow/datatables'); ?>",
                 "type": "POST"
@@ -136,7 +123,22 @@
                     }
                 },
                 { "data": "keterangan" },
-                { "data": "jumlah" },
+                {
+                    'data': null,
+                    createdCell: function (td, rowData) {
+                        // Format the number with Rupiah currency symbol
+                        const formatRupiah = (angka) => {
+                            let rupiah = '';
+                            let angkarev = angka.toString().split('').reverse().join('');
+                            for (let i = 0; i < angkarev.length; i++)
+                                if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + '.';
+                            return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+                        };
+
+                        const number = parseFloat(rowData.jumlah);
+                        $(td).html(formatRupiah(number));
+                    }
+                },
                 { "data": "waktu" },
                 { "data": "tipe" },
                 { "data": "name_unit" },
@@ -146,17 +148,41 @@
                     "render": function (data, type, row) {
                         return `
 <div class="text-center">
-    <button class="btn btn-primary btn-sm view-details" onclick="modalCash('${data}')"><i class='fas fa-edit'></i>
-        Edit</button>
-    <button class="btn btn-danger btn-sm view-details" onclick="deleteRecord('${data}')"><i class='fas fa-trash'></i>
-        Hapus</button>
+    <button class="btn btn-primary btn-sm view-details" onclick="modalCash('${data}')"><i class='fas fa-edit'></i> Edit</button>
+    <button class="btn btn-danger btn-sm view-details" onclick="deleteRecord('${data}')"><i class='fas fa-trash'></i> Hapus</button>
 </div>
 `;
                     }
                 }
+            ],
+            "dom": "Blfrtip",
+            "buttons": [
+                {
+                    extend: 'excelHtml5',
+                    text: '<span class="fa fa-file-excel-o"></span> Download Excel',
+                    className: 'btn btn-primary btn-sm',
+                    title: 'Report Cash Flow',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        },
+                        format: {
+                            body: function (inner, rowidx, colidx, node) {
+                                if (colidx == 0) {
+                                    return rowidx + 1;
+                                } else if (colidx == 2) {
+                                    return inner.jumlah;
+
+                                } else {
+                                    return node.innerText;
+                                }
+                            }
+                        },
+                        columns: [0, 1, 2, 3, 4, 5, 6] // Adjust columns as needed
+                    }
+                }
             ]
         });
-
         $('#myForm').on('submit', function (event) {
             event.preventDefault();
             submitBtn.prop('disabled', true).text('Waiting...');

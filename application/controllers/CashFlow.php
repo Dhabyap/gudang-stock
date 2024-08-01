@@ -45,7 +45,6 @@ class CashFlow extends CI_Controller
 		$this->datatables->join('unit b', 'a.unit = b.id', 'left');
 
 		$this->datatables->where("a.isDelete = '0'", NULL, FALSE);
-		$this->datatables->edit_column('jumlah', '$1', 'rupiah(jumlah)');
 		$this->datatables->edit_column('id', '$1', 'encrypt(id)');
 		echo $this->datatables->generate();
 		exit;

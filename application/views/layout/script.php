@@ -17,3 +17,9 @@
 
 <!-- notif -->
 <script src="<?= staticPath() ?>js/notify.min.js"></script>
+
+<script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.0/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.1.0/js/buttons.html5.min.js"></script>

@@ -15,11 +15,12 @@
 
 <!-- Custom styles for this template-->
 <link href="<?= staticPath() ?>css/sb-admin-2.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.dataTables.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.0/css/buttons.dataTables.css">
+
+
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
-<link href="<?= staticPath() ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<!-- Custom styles for this page -->
