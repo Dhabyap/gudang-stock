@@ -6,6 +6,7 @@ class Unit extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->checkLogin();
 		$this->load->model('UnitModel');
 	}
 

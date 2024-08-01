@@ -61,7 +61,17 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block" />
+    <hr class="sidebar-divider" />
+
+    <div class="sidebar-heading">Settings</div>
+
+    <!-- Nav Item - Account -->
+    <li class="nav-item <?= (current_url() == base_url('account') ? 'active' : '') ?>">
+        <a class="nav-link" href="<?= base_url('account') ?>">
+            <i class="fas fa-key"></i>
+            <span>Account</span>
+        </a>
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

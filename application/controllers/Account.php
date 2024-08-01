@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class CashFlow extends CI_Controller
+class Account extends CI_Controller
 {
 	function __construct()
 	{
@@ -13,7 +13,7 @@ class CashFlow extends CI_Controller
 	public function index()
 	{
 		$data['units'] = $this->CashFlowModel->getUnits();
-		$content = $this->load->view('admin/cash_flow', $data, TRUE);
+		$content = $this->load->view('admin/account', $data, TRUE);
 		$this->template->load('', $content);
 
 	}

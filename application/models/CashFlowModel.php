@@ -22,6 +22,7 @@ class CashFlowModel extends CI_Model
             'waktu' => $post['waktu'],
             'tipe' => $post['tipe'],
             'unit' => $post['unit'],
+            'keterangan' => $post['keterangan'],
         ];
 
         if ($id) {

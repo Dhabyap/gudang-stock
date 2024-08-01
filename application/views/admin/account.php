@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Cash Flow</h1>
+    <h1 class="h3 mb-2 text-gray-800">Account</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <a href="#" data-toggle="modal" onclick="modalCash()" class="btn btn-success btn-icon-split">
@@ -15,7 +15,6 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Keterangan</th>
                             <th>Jumlah</th>
                             <th>Waktu</th>
                             <th>Transaksi</th>
@@ -27,7 +26,6 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Keterangan</th>
                             <th>Jumlah</th>
                             <th>Waktu</th>
                             <th>Transaksi</th>
@@ -62,7 +60,7 @@
                     </div>
                     <div class="form-group">
                         <label for="jumlah">Unit</label>
-                        <select class="form-control" name="unit" id="unit">
+                        <select class="form-control" name="unit" id="unit" required>
                             <option value="">Pilih...</option>
                             <?php foreach ($units as $unit): ?>
                                 <option value="<?= $unit->id ?>"><?= $unit->name ?></option>
@@ -89,10 +87,6 @@
                         <label for="tanggal">Tanggal</label>
                         <input type="date" class="form-control" name="tanggal" id="tanggal" required>
                     </div>
-                    <div class="form-group">
-                        <label for="keterangan">Keterangan</label>
-                        <input type="text" class="form-control" name="keterangan" id="keterangan">
-                    </div>
                 </div>
                 <input type="text" id="id" name="id" hidden>
                 <div class="modal-footer">
@@ -106,10 +100,6 @@
 
 <script>
     $(document).ready(function () {
-        $('#unit').select2({
-            width: '100%',
-            dropdownParent: $('#modalCashFlow')
-        });
         var submitBtn = $('#submitBtn');
         var modal = $('#modalCashFlow');
 
@@ -135,7 +125,6 @@
                         return meta.row + 1;
                     }
                 },
-                { "data": "keterangan" },
                 { "data": "jumlah" },
                 { "data": "waktu" },
                 { "data": "tipe" },
@@ -145,13 +134,11 @@
                     "data": "id",
                     "render": function (data, type, row) {
                         return `
-<div class="text-center">
-    <button class="btn btn-primary btn-sm view-details" onclick="modalCash('${data}')"><i class='fas fa-edit'></i>
-        Edit</button>
-    <button class="btn btn-danger btn-sm view-details" onclick="deleteRecord('${data}')"><i class='fas fa-trash'></i>
-        Hapus</button>
-</div>
-`;
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-sm view-details" onclick="modalCash('${data}')"><i class='fas fa-edit'></i> Edit</button>
+                            <button class="btn btn-danger btn-sm view-details" onclick="deleteRecord('${data}')"><i class='fas fa-trash'></i> Hapus</button>
+                        </div>
+                        `;
                     }
                 }
             ]
