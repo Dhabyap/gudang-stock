@@ -33,23 +33,4 @@ class LoginModel extends CI_Model
 
         exit(json_encode($response));
     }
-
-    function detail($id)
-    {
-        $query = $this->db->get_where($this->table, array('id' => $id))->result_array()[0];
-        return json_encode($query);
-    }
-    function delete($id)
-    {
-        $data['updated_at'] = date('Y-m-d H:i:s');
-        $data['isDelete'] = '1';
-        $this->db->where('id', $id);
-        $this->db->update($this->table, $data);
-        $response = [
-            'n' => 'SS',
-            'm' => 'Data berhasil di hapus!'
-        ];
-
-        exit(json_encode($response));
-    }
 }

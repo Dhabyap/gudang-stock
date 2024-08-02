@@ -8,11 +8,20 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 		$this->checkLogin();
+		$this->load->model('DashboardModel');
+
 	}
 	public function index()
 	{
-		$content = $this->load->view('admin/dashboard', [], TRUE);
+		$data['countData'] = $this->DashboardModel->countUnitsAndCashFlows();
+		$content = $this->load->view('admin/dashboard', $data, TRUE);
 		$this->template->load('', $content);
-
 	}
+
+	public function getChartData()
+	{
+		return $this->DashboardModel->chartTransaksi();
+	}
+
+
 }

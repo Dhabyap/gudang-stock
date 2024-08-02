@@ -26,18 +26,4 @@ class Login extends CI_Controller
 		redirect('login');
 	}
 
-
-	function detail($id)
-	{
-		$id = decrypt($id);
-		echo $this->LoginModel->detail($id);
-
-	}
-	function delete($id)
-	{
-		$id = decrypt($id);
-		echo $this->LoginModel->delete($id);
-
-	}
-
 }
