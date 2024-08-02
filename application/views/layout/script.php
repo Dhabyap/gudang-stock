@@ -31,3 +31,9 @@
 <script>
     base_url = '<?= base_url() ?>'
 </script>
+
+<script>
+    function formatRupiah(number) {
+        return number.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+    }
+</script>

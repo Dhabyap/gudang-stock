@@ -22,6 +22,10 @@ class Dashboard extends CI_Controller
 	{
 		return $this->DashboardModel->chartTransaksi();
 	}
+	public function getChartTransaksi()
+	{
+		return $this->DashboardModel->chartDay();
+	}
 
 
 }
