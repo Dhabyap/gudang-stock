@@ -11,7 +11,6 @@ class CashFlow extends CI_Controller
 		$this->checkLogin();
 		$this->load->model('CashFlowModel');
 		$this->auth = $this->session->userdata('auth_login');
-
 	}
 
 	public function index()
@@ -20,7 +19,6 @@ class CashFlow extends CI_Controller
 		$data['units'] = $this->CashFlowModel->getUnits();
 		$content = $this->load->view('admin/cash_flow', $data, TRUE);
 		$this->template->load('', $content);
-
 	}
 
 	function insert()
@@ -32,13 +30,11 @@ class CashFlow extends CI_Controller
 	{
 		$id = decrypt($id);
 		echo $this->CashFlowModel->detail($id);
-
 	}
 	function delete($id)
 	{
 		$id = decrypt($id);
 		echo $this->CashFlowModel->delete($id);
-
 	}
 
 	public function datatables()
@@ -84,5 +80,4 @@ class CashFlow extends CI_Controller
 		echo $this->datatables->generate();
 		exit;
 	}
-
 }

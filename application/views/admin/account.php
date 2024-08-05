@@ -138,7 +138,7 @@
                         $('#tableAccount').DataTable().ajax.reload();
                     } else {
                         $.notify(obj.m, "danger");
-                        }
+                    }
                     submitBtn.prop('disabled', false).text('Submit');
                 },
                 error: function (error) {

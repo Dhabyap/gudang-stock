@@ -10,7 +10,6 @@ class Account extends CI_Controller
 		$this->checkLogin();
 		$this->load->model('AccountModel');
 		$this->auth = $this->session->userdata('auth_login');
-
 	}
 
 	public function index()
@@ -19,7 +18,6 @@ class Account extends CI_Controller
 		$data['levels'] = $this->AccountModel->getLevels();
 		$content = $this->load->view('admin/account', $data, TRUE);
 		$this->template->load('', $content);
-
 	}
 
 	function insert()
@@ -31,13 +29,11 @@ class Account extends CI_Controller
 	{
 		$id = decrypt($id);
 		echo $this->AccountModel->detail($id);
-
 	}
 	function delete($id)
 	{
 		$id = decrypt($id);
 		echo $this->AccountModel->delete($id);
-
 	}
 
 	public function datatables()

@@ -11,7 +11,6 @@ class Unit extends CI_Controller
 		$this->checkLogin();
 		$this->load->model('UnitModel');
 		$this->auth = $this->session->userdata('auth_login');
-
 	}
 
 	public function index()
@@ -19,7 +18,6 @@ class Unit extends CI_Controller
 		$data['auth'] = $this->auth;
 		$content = $this->load->view('admin/unit', $data, TRUE);
 		$this->template->load('', $content);
-
 	}
 
 	function insert()
@@ -31,13 +29,11 @@ class Unit extends CI_Controller
 	{
 		$id = decrypt($id);
 		echo $this->UnitModel->detail($id);
-
 	}
 	function delete($id)
 	{
 		$id = decrypt($id);
 		echo $this->UnitModel->delete($id);
-
 	}
 
 	public function datatables()

@@ -86,7 +86,6 @@ class AccountModel extends CI_Model
         $this->db->insert($this->table, $data);
     }
 
-
     function detail($id)
     {
         $query = $this->db->get_where($this->table, array('id' => $id))->result_array()[0];

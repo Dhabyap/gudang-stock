@@ -26,6 +26,4 @@ class Dashboard extends CI_Controller
 	{
 		return $this->DashboardModel->chartDay();
 	}
-
-
 }
