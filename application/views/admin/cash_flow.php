@@ -83,7 +83,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                <h5 class="modal-title"></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -302,6 +302,9 @@
                         $.notify(obj.m, "success");
                         modal.modal('hide');
                         $('#example').DataTable().ajax.reload();
+                    } else {
+                        $.notify(obj.m, "danger");
+
                     }
                     submitBtn.prop('disabled', false).text('Submit');
                 },
@@ -315,11 +318,14 @@
 
     function modalCash(id = "") {
         const modal = $('#modalCashFlow');
+        const modalTitle = modal.find('.modal-title');
+
         if (id) {
             $.ajax({
                 url: `<?= base_url('CashFlow/detail/'); ?>${id}`,
                 method: 'GET',
                 success: function (response) {
+                    modalTitle.text('Edit Data');
                     var obj = JSON.parse(response)
                     populateForm(obj);
                     modal.modal('show');
@@ -329,6 +335,8 @@
                 }
             });
         } else {
+            modalTitle.text('Tambah Data');
+
             clearForm();
             modal.modal('show');
         }

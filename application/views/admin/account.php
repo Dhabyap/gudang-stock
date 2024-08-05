@@ -2,7 +2,7 @@
     <h1 class="h3 mb-2 text-gray-800">Account</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a href="#" data-toggle="modal" onclick="modalCash()" class="btn btn-success btn-icon-split">
+            <a href="#" data-toggle="modal" onclick="modalAccount()" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="example" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="tableAccount" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -29,12 +29,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalCashFlow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modalAccount" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                <h5 class="modal-title"></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -42,37 +41,30 @@
             <form id="myForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="jumlah">Jumlah</label>
-                        <input type="number" class="form-control" name="jumlah" id="jumlah" required>
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="jumlah">Unit</label>
-                        <select class="form-control" name="unit" id="unit" required>
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appartement">Unit</label>
+                        <select class="form-control" name="appartement" id="appartement" required>
                             <option value="">Pilih...</option>
-                            <?php foreach ($units as $unit): ?>
-                                <option value="<?= $unit->id ?>"><?= $unit->name ?></option>
+                            <?php foreach ($appartements as $appartement): ?>
+                                <option value="<?= $appartement->id ?>"><?= $appartement->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="jumlah">Waktu</label>
-                        <select class="form-control" name="waktu" id="waktu" required>
+                        <label for="level">Level</label>
+                        <select class="form-control" name="level" id="level" required>
                             <option value="">Pilih...</option>
-                            <option value="siang">Siang</option>
-                            <option value="malam">Malam</option>
+                            <?php foreach ($levels as $level): ?>
+                                <option value="<?= $level->id ?>"><?= $level->name ?></option>
+                            <?php endforeach; ?>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tipe">Tipe</label>
-                        <select class="form-control" name="tipe" id="tipe" required>
-                            <option value="">Pilih...</option>
-                            <option value="masuk">Uang Masuk</option>
-                            <option value="keluar">Uang Keluar</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal">Tanggal</label>
-                        <input type="date" class="form-control" name="tanggal" id="tanggal" required>
                     </div>
                 </div>
                 <input type="text" id="id" name="id" hidden>
@@ -88,9 +80,9 @@
 <script>
     $(document).ready(function () {
         var submitBtn = $('#submitBtn');
-        var modal = $('#modalCashFlow');
+        var modal = $('#modalAccount');
 
-        $('#example').DataTable({
+        $('#tableAccount').DataTable({
             "processing": true,
             "searching": false,
             "aLengthMenu": [
@@ -118,10 +110,9 @@
                 {
                     "data": "id",
                     "render": function (data, type, row) {
-                        console.log(data);
                         return `
                         <div class="text-center">
-                            <button class="btn btn-primary btn-sm view-details" onclick="modalCash('${data}')"><i class='fas fa-edit'></i> Edit</button>
+                            <button class="btn btn-primary btn-sm view-details" onclick="modalAccount('${data}')"><i class='fas fa-edit'></i> Edit</button>
                             <button class="btn btn-danger btn-sm view-details" onclick="deleteRecord('${data}')"><i class='fas fa-trash'></i> Hapus</button>
                         </div>
                         `;
@@ -136,7 +127,7 @@
 
             var formData = $(this).serialize();
             $.ajax({
-                url: '<?= base_url('CashFlow/insert'); ?>',
+                url: '<?= base_url('account/insert'); ?>',
                 type: 'POST',
                 data: formData,
                 success: function (data) {
@@ -144,8 +135,10 @@
                     if (obj.n === "SS") {
                         $.notify(obj.m, "success");
                         modal.modal('hide');
-                        $('#example').DataTable().ajax.reload();
-                    }
+                        $('#tableAccount').DataTable().ajax.reload();
+                    } else {
+                        $.notify(obj.m, "danger");
+                        }
                     submitBtn.prop('disabled', false).text('Submit');
                 },
                 error: function (error) {
@@ -155,23 +148,29 @@
         });
     });
 
-    function modalCash(id = "") {
-        console.log(id);
-        const modal = $('#modalCashFlow');
+    function modalAccount(id = "") {
+        const modal = $('#modalAccount');
+        const modalTitle = modal.find('.modal-title');
+
         if (id) {
             $.ajax({
                 url: `<?= base_url('Account/detail/'); ?>${id}`,
                 method: 'GET',
                 success: function (response) {
+                    modalTitle.text('Edit Data');
+
                     var obj = JSON.parse(response)
+                    console.log(obj);
                     populateForm(obj);
                     modal.modal('show');
                 },
+
                 error: function () {
                     alert('Failed to retrieve data.');
                 }
             });
         } else {
+            modalTitle.text('Tambah Data');
             clearForm();
             modal.modal('show');
         }
@@ -182,13 +181,13 @@
             $.notify("Deleting record...", "info");
 
             $.ajax({
-                url: `<?= base_url('CashFlow/delete/'); ?>${id}`,
+                url: `<?= base_url('account/delete/'); ?>${id}`,
                 method: 'DELETE',
                 success: function (response) {
                     var obj = JSON.parse(response);
                     if (obj.n === "SS") {
                         $.notify(obj.m, "success");
-                        $('#example').DataTable().ajax.reload();
+                        $('#tableAccount').DataTable().ajax.reload();
                     }
                 },
                 error: function () {
@@ -201,20 +200,16 @@
     }
 
     function populateForm(data) {
-        $('#jumlah').val(data.jumlah);
-        $('#unit').val(data.unit);
-        $('#waktu').val(data.waktu);
-        $('#tipe').val(data.tipe);
-        $('#tanggal').val(data.tanggal);
+        $('#name').val(data.name);
+        $('#email').val(data.email);
+        $('#appartement').val(data.id_appartement);
         $('#id').val(data.id);
     }
 
     function clearForm() {
-        $('#jumlah').val('');
-        $('#unit').val('');
-        $('#waktu').val('');
-        $('#tipe').val('');
-        $('#tanggal').val('');
+        $('#name').val('');
+        $('#email').val('');
+        $('#appartement').val('');
         $('#id').val('');
     }
 

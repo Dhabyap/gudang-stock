@@ -15,7 +15,8 @@ class Account extends CI_Controller
 
 	public function index()
 	{
-		$data['units'] = $this->AccountModel->getUnits();
+		$data['appartements'] = $this->AccountModel->getApparts();
+		$data['levels'] = $this->AccountModel->getLevels();
 		$content = $this->load->view('admin/account', $data, TRUE);
 		$this->template->load('', $content);
 
@@ -45,6 +46,8 @@ class Account extends CI_Controller
 
 		$this->datatables->select('a.*, a.id');
 		$this->datatables->from('akun a');
+
+		$this->datatables->where("a.isDelete", '0');
 
 		$this->applyUserLevelConditions($this->auth);
 
