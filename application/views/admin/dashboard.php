@@ -8,7 +8,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Pendapatan (Monthly)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <?= rupiah($countData->cash_flow_masuk) ?>
+                                <?= isset($countData->cash_flow_masuk) ? rupiah($countData->cash_flow_masuk) : 0 ?>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -26,7 +26,7 @@
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                 Pengeluaran (Monthly)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <?= rupiah($countData->cash_flow_keluar) ?>
+                                <?= isset($countData->cash_flow_keluar) ? rupiah($countData->cash_flow_keluar) : 0 ?>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -219,6 +219,6 @@
         });
     })
 
-  
+
 
 </script>

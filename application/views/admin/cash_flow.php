@@ -1,25 +1,27 @@
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Cash Flow</h1>
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <a href="#" data-toggle="modal" onclick="modalCash()" class="btn btn-success btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                </span>
-                <span class="text">Tambah </span>
-            </a>
-        </div>
+        <?php if ($auth['level_id'] != 1): ?>
+            <div class="card-header py-3">
+                <a href="#" data-toggle="modal" onclick="modalCash()" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Tambah </span>
+                </a>
+            </div>
+        <?php endif; ?>
         <div class="card">
             <div class="card-body">
                 <form action="" id="filter-order">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-lg-3">
                             <label class="mb-1" for="date">Tanggal</label>
                             <input class="form-control" type="text" id="daterange">
                             <input type="text" id="start_date" name="start_date" hidden>
                             <input type="text" id="end_date" name="end_date" hidden>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-lg-2">
                             <label class="mb-1" for="tipe_filter">Tipe</label>
                             <select class="form-control" name="tipe_filter" id="tipe_filter">
                                 <option value="">Pilih...</option>
@@ -27,7 +29,7 @@
                                 <option value="keluar">Uang Keluar</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-lg-2">
                             <label class="mb-1" for="waktu_filter">Waktu</label>
                             <select class="form-control" name="waktu_filter" id="waktu_filter">
                                 <option value="">Pilih...</option>
@@ -35,7 +37,7 @@
                                 <option value="malam">Malam</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-lg-2">
                             <label class="mb-1" for="unit_filter">Unit</label>
                             <select class="form-control select2" name="unit_filter" id="unit_filter">
                                 <option value="">Pilih...</option>
@@ -137,6 +139,17 @@
 </div>
 
 <script>
+    var currentDate = new Date();
+
+    var monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    var formattedDate = currentDate.getDate() + ' ' +
+        monthNames[currentDate.getMonth()] + ' ' +
+        currentDate.getFullYear();
+
     $(function () {
         var start = moment().subtract(29, 'days');
         var end = moment();
@@ -236,7 +249,7 @@
                         extend: 'excelHtml5',
                         text: '<span class="fa fa-file-excel-o"></span> Download Excel',
                         className: 'btn btn-primary btn-sm',
-                        title: 'Report Cash Flow',
+                        title: 'Report Cash Flow - ' + formattedDate,
                         exportOptions: {
                             modifier: {
                                 page: 'all'
@@ -252,7 +265,7 @@
                                     }
                                 }
                             },
-                            columns: [0, 1, 2, 3, 4, 5, 6] // Adjust columns as needed
+                            columns: [0, 1, 2, 3, 4, 5, 6]
                         }
                     }
                 ]

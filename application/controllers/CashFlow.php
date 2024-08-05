@@ -3,15 +3,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class CashFlow extends CI_Controller
 {
+	private $auth;
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->checkLogin();
 		$this->load->model('CashFlowModel');
+		$this->auth = $this->session->userdata('auth_login');
+
 	}
 
 	public function index()
 	{
+		$data['auth'] = $this->auth;
 		$data['units'] = $this->CashFlowModel->getUnits();
 		$content = $this->load->view('admin/cash_flow', $data, TRUE);
 		$this->template->load('', $content);
@@ -39,7 +44,7 @@ class CashFlow extends CI_Controller
 	public function datatables()
 	{
 		$this->load->library('datatables');
-		$get = $this->input->get();
+		$auth_login = $this->session->userdata('auth_login');
 
 		$start_date = $this->input->get('start_date');
 		$end_date = $this->input->get('end_date');
@@ -66,6 +71,13 @@ class CashFlow extends CI_Controller
 			$this->datatables->where("a.unit = '$unit'", NULL, FALSE);
 		}
 
+		if ($auth_login['level_id'] == 2) {
+			$this->datatables->where("a.akun_id = " . $auth_login['id'] . "", NULL, FALSE);
+		}
+
+		if ($auth_login['level_id'] == 3) {
+			$this->datatables->where("a.akun_id = " . $auth_login['id_akun'] . "", NULL, FALSE);
+		}
 
 		$this->datatables->edit_column('id', '$1', 'encrypt(id)');
 

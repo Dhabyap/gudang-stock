@@ -5,33 +5,29 @@ if (!defined('BASEPATH'))
 class CashFlowModel extends CI_Model
 {
     private $table;
+    private $auth;
 
     function __construct()
     {
         parent::__construct();
+        $this->auth = $this->session->userdata('auth_login');
         $this->table = 'cash_flow';
     }
 
-    function insert()
+    public function insert()
     {
         $post = $this->input->post();
         $id = $post['id'];
-        $data = [
-            'jumlah' => $post['jumlah'],
-            'tanggal' => $post['tanggal'],
-            'waktu' => $post['waktu'],
-            'tipe' => $post['tipe'],
-            'unit' => $post['unit'],
-            'keterangan' => $post['keterangan'],
-        ];
+
+        $data = $this->prepareData($post);
+
+        $this->setUserSpecificData($data);
 
         if ($id) {
-            $data['updated_at'] = date('Y-m-d H:i:s');
-            $this->db->where('id', $id);
-            $this->db->update($this->table, $data);
+            $this->updateRecord($id, $data);
             $message = 'Data berhasil diubah';
         } else {
-            $this->db->insert($this->table, $data);
+            $this->insertRecord($data);
             $message = 'Data berhasil ditambahkan';
         }
 
@@ -41,6 +37,41 @@ class CashFlowModel extends CI_Model
         ];
 
         exit(json_encode($response));
+    }
+
+    private function prepareData($post)
+    {
+        return [
+            'jumlah' => $post['jumlah'],
+            'tanggal' => $post['tanggal'],
+            'waktu' => $post['waktu'],
+            'tipe' => $post['tipe'],
+            'unit' => isset($post['unit']) ? $post['unit'] : null,
+            'keterangan' => $post['keterangan']
+        ];
+    }
+
+    private function setUserSpecificData(&$data)
+    {
+        if ($this->auth['level_id'] == 2) {
+            $data['akun_id'] = $this->auth['id'];
+        }
+
+        if ($this->auth['level_id'] == 3) {
+            $data['akun_id'] = $this->auth['id_akun'];
+        }
+    }
+
+    private function updateRecord($id, $data)
+    {
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $this->db->where('id', $id);
+        $this->db->update($this->table, $data);
+    }
+
+    private function insertRecord($data)
+    {
+        $this->db->insert($this->table, $data);
     }
 
     function detail($id)
@@ -63,6 +94,17 @@ class CashFlowModel extends CI_Model
     }
     public function getUnits()
     {
-        return $this->db->get('unit')->result();
+        $this->db->select('*');
+        $this->db->from('unit');
+
+        if ($this->auth['level_id'] == 2) {
+            $this->db->where('akun_id', $this->auth['id']);
+        } elseif ($this->auth['level_id'] == 3) {
+            $this->db->where('akun_id', $this->auth['id_akun']);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
     }
+
 }

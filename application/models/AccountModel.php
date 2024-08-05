@@ -2,16 +2,14 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-class UnitModel extends CI_Model
+class AccountModel extends CI_Model
 {
     private $table;
-    private $auth;
 
     function __construct()
     {
         parent::__construct();
-        $this->auth = $this->session->userdata('auth_login');
-        $this->table = 'unit';
+        $this->table = 'akun';
     }
 
     function insert()
@@ -20,16 +18,9 @@ class UnitModel extends CI_Model
         $id = $post['id'];
         $data = [
             'name' => $post['name'],
-            'type' => $post['tipe'],
+            'email' => $post['email'],
+            'password' => $post['password'],
         ];
-
-        if ($this->auth['level_id'] == 2) {
-            $data['akun_id'] = $this->auth['id'];
-        }
-
-        if ($this->auth['level_id'] == 3) {
-            $data['akun_id'] = $this->auth['id_akun'];
-        }
 
         if ($id) {
             $data['updated_at'] = date('Y-m-d H:i:s');
@@ -66,5 +57,9 @@ class UnitModel extends CI_Model
         ];
 
         exit(json_encode($response));
+    }
+    public function getUnits()
+    {
+        return $this->db->get('unit')->result();
     }
 }

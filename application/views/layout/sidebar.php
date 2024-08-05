@@ -63,15 +63,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider" />
 
-    <div class="sidebar-heading">Settings</div>
-
-    <!-- Nav Item - Account -->
-    <li class="nav-item <?= (current_url() == base_url('account') ? 'active' : '') ?>">
-        <a class="nav-link" href="<?= base_url('account') ?>">
-            <i class="fas fa-key"></i>
-            <span>Account</span>
-        </a>
-    </li>
+    <?php if ($auth['level_id'] != 3): ?>
+        <div class="sidebar-heading">Settings</div>
+        <!-- Nav Item - Account -->
+        <li class="nav-item <?= (current_url() == base_url('account') ? 'active' : '') ?>">
+            <a class="nav-link" href="<?= base_url('account') ?>">
+                <i class="fas fa-key"></i>
+                <span>Account</span>
+            </a>
+        </li>
+    <?php endif; ?>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

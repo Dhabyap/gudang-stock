@@ -15,25 +15,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Jumlah</th>
-                            <th>Waktu</th>
-                            <th>Transaksi</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Level</th>
                             <th>Unit</th>
-                            <th>Tanggal</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Jumlah</th>
-                            <th>Waktu</th>
-                            <th>Transaksi</th>
-                            <th>Unit</th>
-                            <th>Tanggal</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                     </tbody>
                 </table>
@@ -114,7 +101,7 @@
             "serverSide": true,
             "order": [[5, 'desc']],
             "ajax": {
-                "url": "<?= base_url('CashFlow/datatables'); ?>",
+                "url": "<?= base_url('Account/datatables'); ?>",
                 "type": "POST"
             },
             "deferRender": true,
@@ -125,14 +112,13 @@
                         return meta.row + 1;
                     }
                 },
-                { "data": "jumlah" },
-                { "data": "waktu" },
-                { "data": "tipe" },
-                { "data": "name_unit" },
-                { "data": "tanggal" },
+                { "data": "name" },
+                { "data": "email" },
+                { "data": "level_id" },
                 {
                     "data": "id",
                     "render": function (data, type, row) {
+                        console.log(data);
                         return `
                         <div class="text-center">
                             <button class="btn btn-primary btn-sm view-details" onclick="modalCash('${data}')"><i class='fas fa-edit'></i> Edit</button>
@@ -170,10 +156,11 @@
     });
 
     function modalCash(id = "") {
+        console.log(id);
         const modal = $('#modalCashFlow');
         if (id) {
             $.ajax({
-                url: `<?= base_url('CashFlow/detail/'); ?>${id}`,
+                url: `<?= base_url('Account/detail/'); ?>${id}`,
                 method: 'GET',
                 success: function (response) {
                     var obj = JSON.parse(response)
