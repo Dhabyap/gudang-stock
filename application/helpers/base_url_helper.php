@@ -5,27 +5,34 @@ define('ENCRYPTION_KEY', 'dhaby');
 
 function encrypt($data)
 {
-  $cipher = "aes-256-cbc";
-  $key = hash('sha256', ENCRYPTION_KEY, true);
-  $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
-  $encrypted = openssl_encrypt($data, $cipher, $key, OPENSSL_RAW_DATA, $iv);
-
-  return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($iv . $encrypted));
+  if ($data) {
+    $cipher = "aes-256-cbc";
+    $key = hash('sha256', ENCRYPTION_KEY, true);
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+    $encrypted = openssl_encrypt($data, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+    return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($iv . $encrypted));
+  } else {
+    return 0;
+  }
 }
 
 function decrypt($data)
 {
-  $cipher = "aes-256-cbc";
-  $key = hash('sha256', ENCRYPTION_KEY, true);
+  if ($data) {
+    $cipher = "aes-256-cbc";
+    $key = hash('sha256', ENCRYPTION_KEY, true);
 
-  $data = str_replace(['-', '_'], ['+', '/'], $data);
-  $data = base64_decode($data);
+    $data = str_replace(['-', '_'], ['+', '/'], $data);
+    $data = base64_decode($data);
 
-  $iv_length = openssl_cipher_iv_length($cipher);
-  $iv = substr($data, 0, $iv_length);
-  $encrypted = substr($data, $iv_length);
+    $iv_length = openssl_cipher_iv_length($cipher);
+    $iv = substr($data, 0, $iv_length);
+    $encrypted = substr($data, $iv_length);
 
-  return openssl_decrypt($encrypted, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+    return openssl_decrypt($encrypted, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+  } else {
+    return 0;
+  }
 }
 
 function staticPath()
@@ -48,5 +55,24 @@ function tgl_indo($tgl)
   $bulan = nama_bulan($pecah[1]);
   $tahun = $pecah[0];
   return $tanggal . ' ' . $bulan . ' ' . $tahun . ' pukul ' . substr($pisah[1], 0, 5);
+}
+
+function month()
+{
+  return [
+    '01' => 'January',
+    '02' => 'February',
+    '03' => 'March',
+    '04' => 'April',
+    '05' => 'May',
+    '06' => 'June',
+    '07' => 'July',
+    '08' => 'August',
+    '09' => 'September',
+    '10' => 'October',
+    '11' => 'November',
+    '12' => 'December',
+  ];
+  ;
 }
 

@@ -64,6 +64,17 @@
     <hr class="sidebar-divider" />
 
     <?php if ($auth['level_id'] != 3): ?>
+        <div class="sidebar-heading">Report</div>
+        <!-- Nav Item - report -->
+        <li class="nav-item <?= (current_url() == base_url('report') ? 'active' : '') ?>">
+            <a class="nav-link" href="<?= base_url('report') ?>">
+                <i class="far fa-clipboard"></i>
+                <span>Reporting</span>
+            </a>
+        </li>
+
+        <hr class="sidebar-divider" />
+
         <div class="sidebar-heading">Settings</div>
         <!-- Nav Item - Account -->
         <li class="nav-item <?= (current_url() == base_url('account') ? 'active' : '') ?>">
@@ -74,7 +85,6 @@
         </li>
     <?php endif; ?>
 
-    <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>

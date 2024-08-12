@@ -33,7 +33,22 @@
 </script>
 
 <script>
-    function formatRupiah(number) {
-        return number.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
-    }
+    const formatRupiah = (angka) => {
+        let rupiah = '';
+        let angkarev = angka.toString().split('').reverse().join('');
+        for (let i = 0; i < angkarev.length; i++) {
+            if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + '.';
+        }
+        return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+    };
+    var currentDate = new Date();
+
+    var monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    var formattedDate = currentDate.getDate() + ' ' +
+        monthNames[currentDate.getMonth()] + ' ' +
+        currentDate.getFullYear();
 </script>

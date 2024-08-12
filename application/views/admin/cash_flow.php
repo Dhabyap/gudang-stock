@@ -139,17 +139,6 @@
 </div>
 
 <script>
-    var currentDate = new Date();
-
-    var monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-
-    var formattedDate = currentDate.getDate() + ' ' +
-        monthNames[currentDate.getMonth()] + ' ' +
-        currentDate.getFullYear();
-
     $(function () {
         var start = moment().subtract(29, 'days');
         var end = moment();
@@ -215,14 +204,6 @@
                     {
                         "data": null,
                         "createdCell": function (td, rowData) {
-                            const formatRupiah = (angka) => {
-                                let rupiah = '';
-                                let angkarev = angka.toString().split('').reverse().join('');
-                                for (let i = 0; i < angkarev.length; i++)
-                                    if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + '.';
-                                return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
-                            };
-
                             const number = parseFloat(rowData.jumlah);
                             $(td).html(formatRupiah(number));
                         }
