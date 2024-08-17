@@ -35,7 +35,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="report" width="100%" cellspacing="0">
+                <table class="table table-bordered table-striped" id="report" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -56,6 +56,8 @@
 
 <script>
     $(document).ready(function () {
+        let globalParams = '';
+
         function initializeDataTable(url) {
             $('#report').DataTable({
                 processing: true,
@@ -81,9 +83,7 @@
                     {
                         data: "name",
                         createdCell: function (td, cellData, rowData) {
-                            console.log(rowData);
-                            // Replace 'some_url_base' with your base URL or dynamic URL if needed
-                            let url = '<?= base_url('report/detail/'); ?>' + rowData.id;
+                            let url = '<?= base_url('report/detail/'); ?>' + rowData.id_unit + '?' + globalParams;
                             $(td).html('<a href="' + url + '">' + cellData + '</a>');
                         }
                     },
@@ -135,14 +135,15 @@
             });
         }
 
+
         function handleFormSubmission() {
             $("#filter-order").on("submit", function (event) {
                 event.preventDefault();
                 const data = $(this).serialize();
-                const params = new URLSearchParams(data).toString();
+                globalParams = new URLSearchParams(data).toString(); // Store params in the global variable
 
                 $('#report').DataTable().destroy();
-                initializeDataTable("<?= base_url('report/datatables?'); ?>" + params);
+                initializeDataTable("<?= base_url('report/datatables?'); ?>" + globalParams);
             });
         }
 
