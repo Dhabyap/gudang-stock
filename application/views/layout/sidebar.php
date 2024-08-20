@@ -1,5 +1,4 @@
 <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('dashboard') ?>">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-building"></i>
@@ -7,10 +6,8 @@
         <div class="sidebar-brand-text"> MG Property</div>
     </a>
 
-    <!-- Divider -->
     <hr class="sidebar-divider my-0" />
 
-    <!-- Nav Item - Dashboard -->
     <li class="nav-item <?= (current_url() == base_url('dashboard') ? 'active' : '') ?>">
         <a class="nav-link" href="<?= base_url('dashboard') ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -18,7 +15,6 @@
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider" />
 
     <!-- Nav Item - Pages Collapse Menu -->
@@ -42,9 +38,7 @@
         </div>
     </li> -->
 
-    <!-- Heading -->
     <div class="sidebar-heading">Master Data</div>
-    <!-- Nav Item - Cash Flow -->
     <li class="nav-item <?= (current_url() == base_url('CashFlow') ? 'active' : '') ?>">
         <a class="nav-link" href="<?= base_url('CashFlow') ?>">
             <i class="fas fa-dollar-sign"></i>
@@ -52,7 +46,6 @@
         </a>
     </li>
 
-    <!-- Nav Item - Unit -->
     <li class="nav-item <?= (current_url() == base_url('unit') ? 'active' : '') ?>">
         <a class="nav-link" href="<?= base_url('unit') ?>">
             <i class="fas fa-building"></i>
@@ -60,12 +53,10 @@
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider" />
 
     <?php if ($auth['level_id'] != 3): ?>
         <div class="sidebar-heading">Report</div>
-        <!-- Nav Item - report -->
         <li class="nav-item <?= (current_url() == base_url('report') ? 'active' : '') ?>">
             <a class="nav-link" href="<?= base_url('report') ?>">
                 <i class="far fa-clipboard"></i>
@@ -76,7 +67,6 @@
         <hr class="sidebar-divider" />
 
         <div class="sidebar-heading">Settings</div>
-        <!-- Nav Item - Account -->
         <li class="nav-item <?= (current_url() == base_url('account') ? 'active' : '') ?>">
             <a class="nav-link" href="<?= base_url('account') ?>">
                 <i class="fas fa-key"></i>
@@ -88,5 +78,4 @@
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
-
 </ul>

@@ -10,8 +10,6 @@ class Profile extends CI_Controller
 		$this->checkLogin();
 		$this->load->model('DashboardModel');
 		$this->auth = $this->session->userdata('auth_login');
-
-
 	}
 	public function index()
 	{
