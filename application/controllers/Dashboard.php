@@ -13,6 +13,8 @@ class Dashboard extends CI_Controller
 	}
 	public function index()
 	{
+		$data['months'] = month();
+		$data['current_month'] = date('m');
 		$data['countData'] = $this->DashboardModel->countUnitsAndCashFlows();
 		$content = $this->load->view('admin/dashboard', $data, TRUE);
 		$this->template->load('', $content);

@@ -35,7 +35,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="report" width="100%" cellspacing="0">
+                <table class="table table-bordered table-striped nowrap" id="report" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -135,7 +135,6 @@
             });
         }
 
-
         function handleFormSubmission() {
             $("#filter-order").on("submit", function (event) {
                 event.preventDefault();
@@ -150,7 +149,5 @@
         handleFormSubmission();
         initializeDataTable("<?= base_url('report/datatables'); ?>");
     });
-
-
 
 </script>
