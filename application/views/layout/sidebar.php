@@ -39,6 +39,12 @@
     </li> -->
 
     <div class="sidebar-heading">Master Data</div>
+    <li class="nav-item <?= (current_url() == base_url('calendar') ? 'active' : '') ?>">
+        <a class="nav-link" href="<?= base_url('calendar') ?>">
+            <i class="fas fa-calendar"></i>
+            <span>Calendar</span>
+        </a>
+    </li>
     <li class="nav-item <?= (current_url() == base_url('CashFlow') ? 'active' : '') ?>">
         <a class="nav-link" href="<?= base_url('CashFlow') ?>">
             <i class="fas fa-dollar-sign"></i>

@@ -41,3 +41,37 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.table').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "order": [[0, 'desc']],
+            "dom": "Blfrtip",
+            "aLengthMenu": [
+                [-1],
+                ["All"]
+            ],
+            "buttons": [
+                {
+                    extend: 'excelHtml5',
+                    text: '<span class="fa fa-file-excel-o"></span> Download Excel',
+                    className: 'btn btn-primary btn-sm',
+                    title: 'Report Pengeluaran - ' + formattedDate,
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        },
+                        columns: [0, 1, 2, 3]
+                    }
+                }
+            ]
+        });
+    });
+</script>

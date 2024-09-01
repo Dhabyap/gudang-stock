@@ -26,8 +26,8 @@ class DashboardModel extends CI_Model
 
         return $this->db->query(" SELECT
             (SELECT COUNT(*) FROM unit WHERE id IS NOT NULL " . $where . ") AS unit_count,
-            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'masuk' " . $where . " AND DATE_FORMAT(created_at, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') AND isDelete = '0') AS cash_flow_masuk,
-            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'keluar' " . $where . " AND DATE_FORMAT(created_at, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') AND isDelete = '0') AS cash_flow_keluar"
+            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'masuk' " . $where . " AND DATE_FORMAT(tanggal, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') AND isDelete = '0') AS cash_flow_masuk,
+            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'keluar' " . $where . " AND DATE_FORMAT(tanggal, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') AND isDelete = '0') AS cash_flow_keluar"
         )->row();
     }
 

@@ -49,7 +49,8 @@
                         <div class="col-md-2">
                             <label class="mb-4"></label>
                             <button type="submit" class="btn btn-info w-100" id="filter-order"><i
-                                    class="mdi mdi-filter"></i>CARI</button>
+                                    class="mdi mdi-filter"></i>CARI
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -94,6 +95,8 @@
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" name="jumlah" id="jumlah" required>
                     </div>
+                    dhaby_anggika
+                    dhabyAnggika
                     <div class="form-group">
                         <label for="unit">Unit</label>
                         <select class="form-control" name="unit" id="unit">
