@@ -124,7 +124,7 @@
 
             var formData = $(this).serialize();
             $.ajax({
-                url: '<?= base_url('account/insert'); ?>',
+                url: '<?= base_url('unit/insert'); ?>',
                 type: 'POST',
                 data: formData,
                 success: function (data) {

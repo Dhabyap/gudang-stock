@@ -8,6 +8,7 @@ class Calendar extends CI_Controller
 	{
 		parent::__construct();
 		$this->checkLogin();
+		$this->load->model('CalendarModel');
 
 	}
 	public function index()
@@ -17,5 +18,17 @@ class Calendar extends CI_Controller
 		$content = $this->load->view('admin/calendar', $data, TRUE);
 		$this->template->load('', $content);
 	}
+
+	function dataCalendar()
+	{
+		return $this->CalendarModel->dataCalendar();
+	}
+
+	public function getEventDetails()
+	{
+		$id = $this->input->post('id');
+		return $this->CalendarModel->detailDataCalendar($id);
+	}
+
 
 }

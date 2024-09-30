@@ -7,117 +7,37 @@
     </div>
 </div>
 
+<div class="modal fade" id="eventDetailsModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eventDetailsModalLabel">Event Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+                <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                <p><strong>Harga:</strong> <span id="modalJumlah"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <script>
 
     $(document).ready(function () {
-        var todayDate = moment().startOf('day');
-        var YM = todayDate.format('YYYY-MM');
-        var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-        var TODAY = todayDate.format('YYYY-MM-DD');
-        var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
-
         var Calendar = FullCalendar.Calendar;
         var calendarEl = $('#calendar')[0];
-        var events = [
-            {
-                title: 'All Day Event',
-                start: YM + '-01',
-                description: 'Toto lorem ipsum dolor sit incid idunt ut',
-                className: "fc-event-danger fc-event-solid-warning"
-            },
-            {
-                title: 'Reporting',
-                start: YM + '-14T13:30:00',
-                description: 'Lorem ipsum dolor incid idunt ut labore',
-                end: YM + '-14',
-                className: "fc-event-success"
-            },
-            {
-                title: 'Company Trip',
-                start: YM + '-02',
-                description: 'Lorem ipsum dolor sit tempor incid',
-                end: YM + '-03',
-                className: "fc-event-primary"
-            },
-            {
-                title: 'ICT Expo 2017 - Product Release',
-                start: YM + '-03',
-                description: 'Lorem ipsum dolor sit tempor inci',
-                end: YM + '-05',
-                className: "fc-event-light fc-event-solid-primary"
-            },
-            {
-                title: 'Dinner',
-                start: YM + '-12',
-                description: 'Lorem ipsum dolor sit amet, conse ctetur',
-                end: YM + '-10'
-            },
-            {
-                id: 999,
-                title: 'Repeating Event',
-                start: YM + '-09T16:00:00',
-                description: 'Lorem ipsum dolor sit ncididunt ut labore',
-                className: "fc-event-danger"
-            },
-            {
-                id: 1000,
-                title: 'Repeating Event',
-                description: 'Lorem ipsum dolor sit amet, labore',
-                start: YM + '-16T16:00:00'
-            },
-            {
-                title: 'Conference',
-                start: YESTERDAY,
-                end: TOMORROW,
-                description: 'Lorem ipsum dolor eius mod tempor labore',
-                className: "fc-event-primary"
-            },
-            {
-                title: 'Meeting',
-                start: TODAY + 'T10:30:00',
-                end: TODAY + 'T12:30:00',
-                description: 'Lorem ipsum dolor eiu idunt ut labore'
-            },
-            {
-                title: 'Lunch',
-                start: TODAY + 'T12:00:00',
-                className: "fc-event-info",
-                description: 'Lorem ipsum dolor sit amet, ut labore'
-            },
-            {
-                title: 'Meeting',
-                start: TODAY + 'T14:30:00',
-                className: "fc-event-warning",
-                description: 'Lorem ipsum conse ctetur adipi scing'
-            },
-            {
-                title: 'Happy Hour',
-                start: TODAY + 'T17:30:00',
-                className: "fc-event-info",
-                description: 'Lorem ipsum dolor sit amet, conse ctetur'
-            },
-            {
-                title: 'Dinner',
-                start: TOMORROW + 'T05:00:00',
-                className: "fc-event-solid-danger fc-event-light",
-                description: 'Lorem ipsum dolor sit ctetur adipi scing'
-            },
-            {
-                title: 'Birthday Party',
-                start: TOMORROW + 'T07:00:00',
-                className: "fc-event-primary",
-                description: 'Lorem ipsum dolor sit amet, scing'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: YM + '-28',
-                className: "fc-event-solid-info fc-event-light",
-                description: 'Lorem ipsum dolor sit amet, labore'
-            }
-        ];
+
         var calendar = new Calendar(calendarEl, {
+            timeFormat: 'hh:mm a',
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
@@ -125,14 +45,41 @@
             },
             editable: true,
             droppable: true,
-            events: events
+            timeZone: 'Asia/Jakarta',
+            events: {
+                url: '<?= base_url('calendar/dataCalendar'); ?>',
+                method: 'GET',
+                failure: function () {
+                    alert('There was an error while fetching events!');
+                }
+            },
+            eventClick: function (info) {
+                info.jsEvent.preventDefault();
+
+                var eventId = info.event.id;
+
+                $.ajax({
+                    url: '<?= base_url('calendar/getEventDetails'); ?>', // Replace with your controller's method
+                    method: 'POST',
+                    data: { id: eventId },
+                    success: function (response) {
+                        var obj = JSON.parse(response);
+
+                        console.log(obj);
+                        $('#modalTitle').text(obj.keterangan);
+                        $('#modalDate').text(obj.tanggal);
+                        $('#modalJumlah').text(formatRupiah(obj.jumlah) + `-(${obj.waktu})`);
+
+                        $('#eventDetailsModal').modal('show');
+                    },
+                    error: function () {
+                        alert('Failed to fetch event details!');
+                    }
+                });
+            }
         });
 
         calendar.render();
-
     });
-
-
-
 
 </script>

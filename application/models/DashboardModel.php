@@ -10,28 +10,34 @@ class DashboardModel extends CI_Model
     {
         parent::__construct();
         $this->auth = $this->session->userdata('auth_login');
-
     }
 
-    function countUnitsAndCashFlows()
+    function countUnitsAndCashFlows($month)
     {
         $where = "";
         if ($this->auth['level_id'] == 2) {
-            $where = 'AND akun_id = ' . $this->auth['id'] . '';
+            $where = 'AND akun_id = ' . $this->auth['id'];
         }
 
         if ($this->auth['level_id'] == 3) {
-            $where = 'AND akun_id = ' . $this->auth['id_akun'] . '';
+            $where = 'AND akun_id = ' . $this->auth['id_akun'];
         }
 
-        return $this->db->query(" SELECT
-            (SELECT COUNT(*) FROM unit WHERE id IS NOT NULL " . $where . ") AS unit_count,
-            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'masuk' " . $where . " AND DATE_FORMAT(tanggal, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') AND isDelete = '0') AS cash_flow_masuk,
-            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'keluar' " . $where . " AND DATE_FORMAT(tanggal, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m') AND isDelete = '0') AS cash_flow_keluar"
+        $currentYear = date('Y');
+        $yearMonth = sprintf('%s-%02d', $currentYear, $month);
+
+        return $this->db->query(
+            "SELECT
+            (SELECT COUNT(*) FROM unit WHERE id IS NOT NULL $where) AS unit_count,
+            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'masuk' $where
+                AND DATE_FORMAT(tanggal, '%Y-%m') = '$yearMonth' AND isDelete = '0') AS cash_flow_masuk,
+            (SELECT SUM(jumlah) FROM cash_flow WHERE tipe = 'keluar' $where
+                AND DATE_FORMAT(tanggal, '%Y-%m') = '$yearMonth' AND isDelete = '0') AS cash_flow_keluar"
         )->row();
     }
 
-    function chartTransaksi()
+
+    function chartTransaksi($month)
     {
         $where = "";
 
@@ -43,7 +49,7 @@ class DashboardModel extends CI_Model
             $where = 'AND a.akun_id = ' . $this->auth['id_akun'] . '';
         }
 
-        $result = $this->db->query("SELECT COUNT(a.id) as total, b.name FROM cash_flow a LEFT JOIN unit b ON a.unit = b.id WHERE a.unit != 0 " . $where . " AND a.isDelete = '0' AND a.tipe = 'masuk' AND MONTH(a.tanggal) = MONTH(CURDATE()) GROUP BY a.unit ORDER BY total ASC")->result();
+        $result = $this->db->query("SELECT COUNT(a.id) as total, b.name FROM cash_flow a LEFT JOIN unit b ON a.unit = b.id WHERE a.unit != 0 " . $where . " AND a.isDelete = '0' AND a.tipe = 'masuk' AND MONTH(a.tanggal) = '$month' GROUP BY a.unit ORDER BY total ASC")->result();
 
         $series = [];
         $categories = [];
@@ -60,12 +66,12 @@ class DashboardModel extends CI_Model
         echo json_encode($data);
     }
 
-    public function chartDay()
+    public function chartDay($month,$year)
     {
         $where = "";
-        $currentMonth = date('Y-m');
+        $currentMonth = $year;
         $currentYear = date('Y');
-        $currentMonthNumber = date('m');
+        $currentMonthNumber = $month;
 
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $currentMonthNumber, $currentYear);
 

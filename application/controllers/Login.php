@@ -7,11 +7,16 @@ class Login extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('LoginModel');
+
 	}
 
 	public function index()
 	{
-		$this->load->view('admin/login', [], );
+		if ($this->session->userdata('auth_login')) {
+			redirect('dashboard');
+		} else {
+			$this->load->view('admin/login', [], );
+		}
 	}
 
 	function insert()

@@ -94,6 +94,8 @@ class CI_Controller
 			$auth_login = $this->session->userdata('auth_login');
 			if ($auth_login) {
 				$logged = $auth_login;
+			} else {
+				$logged = false;
 			}
 		}
 		if ($logged) {
@@ -103,7 +105,7 @@ class CI_Controller
 		} else {
 			if (!$login) {
 				$this->session->sess_destroy();
-				redirect('/', 'refresh');
+				redirect('/');
 			}
 		}
 	}

@@ -4,7 +4,8 @@
         <div class="col-8">
             <div class="card shadow mb-4 p-4">
                 <div class="card-body">
-                    <h1 class="text-center"><?= strtoupper($auth['name']) ?></h1>
+                    <h2 class="text-center"><?= strtoupper($appartement->name) ?>
+                        (<?= strtoupper($appartement->owner) ?>)</h2>
                     <form id="myForm">
                         <div class="modal-body">
                             <div class="form-group">
@@ -19,8 +20,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">New Password</label>
-                                <input type="text" value="" class="form-control" name="password"
-                                    id="password" required>
+                                <input type="password   " value="" class="form-control" name="password" id="password" required>
                             </div>
                         </div>
                         <input type="text" id="id" name="id" value="<?= encrypt($auth['id']) ?>" hidden>
@@ -34,3 +34,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#myForm').on('submit', function (event) {
+            event.preventDefault();
+
+            var formData = $(this).serialize();
+            $.ajax({
+                url: '<?= base_url('Profile/insert'); ?>',
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if (obj.n === "SS") {
+                        $.notify(obj.m, "success");
+                        modal.modal('hide');
+                        $('#example').DataTable().ajax.reload();
+                    } else {
+                        $.notify(obj.m, "danger");
+
+                    }
+                    submitBtn.prop('disabled', false).text('Submit');
+                },
+                error: function (error) {
+                    submitBtn.prop('disabled', false).text('Submit');
+                }
+            });
+        });
+    })
+
+</script>

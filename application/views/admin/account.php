@@ -158,9 +158,7 @@
                 method: 'GET',
                 success: function (response) {
                     modalTitle.text('Edit Data');
-
                     var obj = JSON.parse(response)
-                    console.log(obj);
                     populateForm(obj);
                     modal.modal('show');
                 },

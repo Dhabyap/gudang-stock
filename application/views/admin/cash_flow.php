@@ -95,8 +95,6 @@
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" name="jumlah" id="jumlah" required>
                     </div>
-                    dhaby_anggika
-                    dhabyAnggika
                     <div class="form-group">
                         <label for="unit">Unit</label>
                         <select class="form-control" name="unit" id="unit">

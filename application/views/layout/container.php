@@ -5,7 +5,7 @@
     <?= $head ?>
 </head>
 
-<body id="page-top" oncontextmenu="return false;">
+<body id="page-top">
     <div id="wrapper">
         <?= $sidebar ?>
         <div id="content-wrapper" class="d-flex flex-column">
