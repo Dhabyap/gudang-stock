@@ -41,6 +41,13 @@
         }
         return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
     };
+
+    function formatDate(date) {
+        var d = new Date(date);
+        var day = d.getDate();  // Extract the day
+        var month = monthNames[d.getMonth()];  // Get the month name
+        return day + ' ' + month;  // Return formatted date
+    }
     var currentDate = new Date();
 
     var monthNames = [
@@ -51,4 +58,7 @@
     var formattedDate = currentDate.getDate() + ' ' +
         monthNames[currentDate.getMonth()] + ' ' +
         currentDate.getFullYear();
+
+    var currentMonth = monthNames[currentDate.getMonth()];
+
 </script>

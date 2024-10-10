@@ -180,6 +180,12 @@
         var modal = $('#modalCashFlow');
 
         function initializeDataTable(endpoint) {
+
+            var start = $('#start_date').val();
+            var end = $('#end_date').val();
+
+            var formattedDateRange = formatDate(start) + ' to ' + formatDate(end);
+
             $('#example').DataTable({
                 "processing": true,
                 "searching": false,
@@ -231,7 +237,7 @@
                         extend: 'excelHtml5',
                         text: '<span class="fa fa-file-excel-o"></span> Download Excel',
                         className: 'btn btn-primary btn-sm',
-                        title: 'Report Cash Flow - ' + formattedDate,
+                        title: 'Report Cash Flow - ' + formattedDateRange,
                         exportOptions: {
                             modifier: {
                                 page: 'all'

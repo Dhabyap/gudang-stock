@@ -59,6 +59,8 @@
         let globalParams = '';
 
         function initializeDataTable(url) {
+            var selectedMonth = $('#month_filter option:selected').text().replace(/\s+/g, '');
+
             $('#report').DataTable({
                 processing: true,
                 searching: false,
@@ -114,7 +116,7 @@
                         extend: 'excelHtml5',
                         text: '<span class="fa fa-file-excel-o"></span> Download Excel',
                         className: 'btn btn-primary btn-sm',
-                        title: 'Report Unit - ' + formattedDate,
+                        title: 'Report Unit - ' + selectedMonth,
                         exportOptions: {
                             modifier: {
                                 page: 'all'
@@ -128,7 +130,7 @@
                                     }
                                 }
                             },
-                            columns: [0, 1, 2, 3, 4]
+                            columns: [0, 1, 2, 3, 4, 5]
                         }
                     }
                 ]
