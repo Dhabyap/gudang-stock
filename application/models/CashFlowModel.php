@@ -47,7 +47,8 @@ class CashFlowModel extends CI_Model
             'waktu' => $post['waktu'],
             'tipe' => $post['tipe'],
             'unit' => isset($post['unit']) ? $post['unit'] : null,
-            'keterangan' => $post['keterangan']
+            'keterangan' => $post['keterangan'],
+            'payment_type' => $post['payment_type'],
         ];
     }
 

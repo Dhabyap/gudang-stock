@@ -32,9 +32,9 @@ class Profile extends CI_Controller
 		return $this->DashboardModel->chartDay();
 	}
 
-	public function insert()
+	public function update()
 	{
 		$post = $this->input->post();
-		var_dump($post);die;
+		return $this->AccountModel->update($post);
 	}
 }

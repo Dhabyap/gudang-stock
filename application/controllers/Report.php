@@ -55,7 +55,7 @@ class Report extends CI_Controller
 		if ($id != 0) {
 			$query = "$baseQuery AND a.unit = $id AND a.tanggal LIKE '%$yearMonth%' ORDER BY a.tanggal ASC";
 		} else {
-			$query = "$baseQuery AND a.unit = 0 ORDER BY a.tanggal ASC";
+			$query = "$baseQuery AND a.unit = 0 AND a.tanggal LIKE '%$yearMonth%'ORDER BY a.tanggal ASC";
 		}
 
 		$data['reports'] = $this->db->query($query)->result();

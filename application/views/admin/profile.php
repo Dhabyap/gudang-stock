@@ -20,7 +20,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">New Password</label>
-                                <input type="password   " value="" class="form-control" name="password" id="password" required>
+                                <input type="password" value="" class="form-control" name="password" id="password"
+                                    required>
                             </div>
                         </div>
                         <input type="text" id="id" name="id" value="<?= encrypt($auth['id']) ?>" hidden>
@@ -42,20 +43,18 @@
 
             var formData = $(this).serialize();
             $.ajax({
-                url: '<?= base_url('Profile/insert'); ?>',
+                url: '<?= base_url('Profile/update'); ?>',
                 type: 'POST',
                 data: formData,
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    if (obj.n === "SS") {
+                    if (obj.n == "SS") {
                         $.notify(obj.m, "success");
-                        modal.modal('hide');
-                        $('#example').DataTable().ajax.reload();
+                        window.location.reload()
                     } else {
                         $.notify(obj.m, "danger");
 
                     }
-                    submitBtn.prop('disabled', false).text('Submit');
                 },
                 error: function (error) {
                     submitBtn.prop('disabled', false).text('Submit');

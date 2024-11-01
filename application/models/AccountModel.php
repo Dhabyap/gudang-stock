@@ -129,4 +129,20 @@ class AccountModel extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function update($post)
+    {
+        $data['name'] = $post['name'];
+        $data['password'] = sha1($post['password']);
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $this->db->where('id', decrypt($post['id']));
+        $this->db->update($this->table, $data);
+
+        $response = [
+            'n' => 'SS',
+            'm' => 'Data berhasil di update!'
+        ];
+
+        exit(json_encode($response));
+    }
 }
+

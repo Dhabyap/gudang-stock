@@ -66,6 +66,7 @@
                             <th>Jumlah</th>
                             <th>Waktu</th>
                             <th>Transaksi</th>
+                            <th>Tipe Pembayaran</th>
                             <th>Unit</th>
                             <th>Tanggal</th>
                             <th>Aksi</th>
@@ -94,6 +95,20 @@
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input type="number" class="form-control" name="jumlah" id="jumlah" required>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payment_type" id="flexRadioDefault1"
+                            value="cash">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Cash
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payment_type" id="flexRadioDefault2"
+                            value="transfer">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Transfer
+                        </label>
                     </div>
                     <div class="form-group">
                         <label for="unit">Unit</label>
@@ -217,6 +232,7 @@
                     },
                     { "data": "waktu" },
                     { "data": "tipe" },
+                    { "data": "payment_type" },
                     { "data": "name_unit" },
                     { "data": "tanggal" },
                     {
@@ -253,7 +269,7 @@
                                     }
                                 }
                             },
-                            columns: [0, 1, 2, 3, 4, 5, 6]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
                     }
                 ]
@@ -360,6 +376,11 @@
         $('#tipe').val(data.tipe);
         $('#tanggal').val(data.tanggal);
         $('#keterangan').val(data.keterangan);
+        if (data.payment_type === 'cash') {
+            $('#flexRadioDefault1').prop('checked', true);
+        } else if (data.payment_type === 'transfer') {
+            $('#flexRadioDefault2').prop('checked', true);
+        }
         $('#id').val(data.id);
     }
 
@@ -370,6 +391,7 @@
         $('#tipe').val('');
         $('#tanggal').val('');
         $('#keterangan').val('');
+        $('#payment_type').val('');
         $('#id').val('');
     }
 
